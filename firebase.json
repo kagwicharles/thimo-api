@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs20",
+    "codebase": "default"
+  },
+  "database": {
+    "rules": "database.rules.json"
+  }
+}
