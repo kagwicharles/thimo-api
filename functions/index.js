@@ -211,6 +211,8 @@ app.post("/initiate-payment", async (req, res) => {
 
     // Get your deployed Cloud Function URL for the callback
     const callbackUrl = `https://us-central1-dailywisdom-1a00f.cloudfunctions.net/api/mpesa-callback`;
+    const paymentAmount =
+      MPESA_CONFIG.environment === "sandbox" ? 1 : Math.round(amount);
 
     // Prepare STK Push request
     const stkPushData = {
@@ -218,7 +220,7 @@ app.post("/initiate-payment", async (req, res) => {
       Password: password,
       Timestamp: timestamp,
       TransactionType: "CustomerPayBillOnline",
-      Amount: Math.round(amount), // M-Pesa requires integer amount
+      Amount: paymentAmount, // M-Pesa requires integer amount
       PartyA: formattedPhone, // Customer phone number
       PartyB: MPESA_CONFIG.businessShortCode, // Your paybill/till number
       PhoneNumber: formattedPhone, // Phone number to receive the STK push
